@@ -154,7 +154,7 @@ class YoutubeBridge extends BridgeAbstract {
 		}
 
 		else if (isset($param['s'])) { /* search mode */
-			$this->request = $param['s']; $page = 1; if (isset($param['pa'])) $page = (int)preg_replace("/[^0-9]/",'', $param['pa']); 
+			$this->request = $param['s']; $page = 1; if (isset($param['pa'])) $page = (int)preg_replace("/[^0-100]/",'', $param['pa']); 
 			$url_listing = $this->getURI().'results?search_query='.urlencode($this->request).'&page='.$page.'&filters=video&search_sort=video_date_uploaded';
 			$html = $this->file_get_html($url_listing) or $this->returnError("Could not request YouTube. Tried:\n - $url_listing", 500);
 			$this->ytBridgeParseHtmlListing($html, 'div.yt-lockup', 'h3');
