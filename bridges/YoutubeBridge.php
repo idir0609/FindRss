@@ -14,7 +14,7 @@ class YoutubeBridge extends BridgeAbstract {
 		$this->homepage = $this->getURI();
 		$this->description = 'Returns the 10 newest videos by username/channel/playlist or search';
 		$this->maintainer = 'mitsukarenai';
-		$this->update = '2016-08-09';
+		$this->update = '02/05/2016';
 
 		$this->parameters['By username'] =
 		'[
@@ -57,13 +57,7 @@ class YoutubeBridge extends BridgeAbstract {
 				"exampleValue" : "test"
 
 			},
-			{
-				"type" : "number",
-				"identifier" : "pa",
-				"name" : "page",
-				"exampleValue" : "1"
-
-			}
+			
 		]';
 	}
 
@@ -83,8 +77,8 @@ class YoutubeBridge extends BridgeAbstract {
 		$item->author = $author;
 		$item->timestamp = $time;
 		$item->uri = $this->getURI().'watch?v='.$vid;
-		$thumbnailUri = str_replace('/www.', '/img.', $this->getURI()).'vi/'.$vid.'/0.jpg';
-		$item->content = '<a href="'.$item->uri.'"><img src="'.$thumbnailUri.'" /></a><br />'.$desc;
+		$item->thumbnailUri = str_replace('/www.', '/img.', $this->getURI()).'vi/'.$vid.'/0.jpg';
+		$item->content = '<a href="'.$item->uri.'"><img src="'.$item->thumbnailUri.'" /></a><br />'.$desc;
 		$this->items[] = $item;
 	}
 
@@ -154,8 +148,8 @@ class YoutubeBridge extends BridgeAbstract {
 		}
 
 		else if (isset($param['s'])) { /* search mode */
-			$this->request = $param['s']; $page = 1; if (isset($param['pa'])) $page = (int)preg_replace("/[^0-100]/",'', $param['pa']); 
-			$url_listing = $this->getURI().'results?search_query='.urlencode($this->request).'&page='.$page.'&filters=video&search_sort=video_date_uploaded';
+			$this->request = $param['s']; 
+			$url_listing = $this->getURI().'results?search_query='.urlencode($this->request).'&sp=CAI%253D';
 			$html = $this->file_get_html($url_listing) or $this->returnError("Could not request YouTube. Tried:\n - $url_listing", 500);
 			$this->ytBridgeParseHtmlListing($html, 'div.yt-lockup', 'h3');
 			$this->request = 'Search: '.str_replace(' - YouTube', '', $html->find('title', 0)->plaintext);
