@@ -23,6 +23,14 @@ abstract class BridgeAbstract implements BridgeInterface{
 	public $maintainer = 'No maintainer';
 	public $parameters = array();
 
+	/**
+	* Loads the Bridge Metadatas
+	*/
+	public function loadMetadatas() {
+
+
+	}
+
     /**
     * Launch probative exception
     */
@@ -67,20 +75,6 @@ abstract class BridgeAbstract implements BridgeInterface{
     }
 
     /**
-    * Define default bridge name
-    */ 
-    public function getName(){
-        return $this->name;
-    }
-
-    /**
-    * Define default bridge URI
-    */
-    public function getURI(){
-        return $this->uri;
-    }
-
-    /**
     * Define default duraction for cache
     */
     public function getCacheDuration(){
@@ -117,7 +111,7 @@ abstract class BridgeAbstract implements BridgeInterface{
         }
       }
       return file_get_html($url,$use_include_path,$context,$offset,$maxLen,
-        $lowercase,$forceTagsClosed,$target_charset,$stripRN,$defaultBRText,
+        $lowercase,$forceTagsClosed,$target_charset,$stripRN,$defaultBRtext,
         $defaultSpanText);
     }
 
@@ -370,6 +364,15 @@ abstract class RssExpander extends HttpCachingBridgeAbstract{
      * @return a RSS-Bridge Item, with (hopefully) the whole content)
      */
     abstract protected function parseRSSItem($item);
+
+
+    public function getName(){
+        return $this->name;
+    }
+
+    public function getURI(){
+        return $this->uri;
+    }
 
     public function getDescription() {
         return $this->description;
